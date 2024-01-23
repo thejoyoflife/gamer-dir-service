@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<!-- Console Appender -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%gray(%d{HH:mm:ss.SSS}) [%cyan(%t)] %green(%-5level) %blue(%logger{36}) - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- Root Logger -->
+	<root level="info">
+		<appender-ref ref="console" />
+	</root>
+
+	<logger name="com.example.gamer.directory" level="trace" additivity="false">
+		<appender-ref ref="console" />
+	</logger>
+	<logger name="net.ttddyy.dsproxy.listener" level="debug" additivity="false">
+		<appender-ref ref="console" />
+	</logger>
+
+</configuration>
