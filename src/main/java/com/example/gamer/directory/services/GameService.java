@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.gamer.directory.domain.dtos.GameDTO;
 import com.example.gamer.directory.domain.mappers.GameMapper;
-import com.example.gamer.directory.exceptions.GameNotFoundException;
+import com.example.gamer.directory.exceptions.NotFoundException;
 import com.example.gamer.directory.repositories.GameRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class GameService {
 	public GameDTO findGameById(@NonNull Integer id) {
 		var game = gameRepository.findById(id)
 							.orElseThrow(() -> 
-								new GameNotFoundException("Game not found for id: %d".formatted(id)));
+								new NotFoundException("Game not found for id: %d".formatted(id)));
 		return gameMapper.toGameDTO(game);
 	}
 }

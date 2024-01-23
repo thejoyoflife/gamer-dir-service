@@ -8,11 +8,11 @@ import org.springframework.web.ErrorResponseException;
 
 import static com.example.gamer.directory.exceptions.ErrorConstants.*; 
 
-public class GameNotFoundException extends ErrorResponseException {
+public class NotFoundException extends ErrorResponseException {
 	private static final long serialVersionUID = 1L;
 	private static final HttpStatus STATUS = HttpStatus.NOT_FOUND;
 
-	public GameNotFoundException(String message) {
+	public NotFoundException(String message) {
 		super(STATUS, asProblemDetail(message), null);
 	}
 	
