@@ -35,7 +35,9 @@ public class GameCreditController {
 	private final CreditService creditService;
 	
 	@Operation(summary = "Award credit to a gamer for a specific game", 
-			description = "This API allows a credit, represented as an integer number, to be awarded for a specific game")
+			description = "This API allows a credit, represented as an integer number, to be awarded for a specific game."
+					+ " Credit can only be awarded once to a gamer for a particular game." 		
+					+ " A gamer may also receive credit for a game in which they have shown no interest as well.")
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "Successfully awarded credit"),
 		@ApiResponse(responseCode = "400", description = "Invalid Input",
