@@ -1,5 +1,6 @@
 package com.example.gamer.directory.exceptions;
 
+import static com.example.gamer.directory.exceptions.ErrorConstants.INVALID_INPUT_TYPE;
 import static java.util.stream.Collectors.joining;
 
 import java.net.URI;
@@ -13,9 +14,8 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
-import static com.example.gamer.directory.exceptions.ErrorConstants.*;
 
 @RestControllerAdvice
 public class GlobalErrorHandler extends ResponseEntityExceptionHandler {
@@ -44,6 +44,16 @@ public class GlobalErrorHandler extends ResponseEntityExceptionHandler {
 		
 		ProblemDetail problem = createInvalidInputProblemDetail(detail);
 		return handleExceptionInternal(ex, problem, headers, status, request);
+	}
+	
+	@Override
+	public ResponseEntity<Object> handleHandlerMethodValidationException(HandlerMethodValidationException ex,
+										HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+		String message = ex.getAllErrors().stream()
+								.map(msg -> msg.getDefaultMessage())
+								.collect(joining("; "));
+		ProblemDetail pd = createInvalidInputProblemDetail(message);
+		return super.handleExceptionInternal(ex, pd, headers, status, request);
 	}
 	
 	private ProblemDetail createInvalidInputProblemDetail(String detail) {
