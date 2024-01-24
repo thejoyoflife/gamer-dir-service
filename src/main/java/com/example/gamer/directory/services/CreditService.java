@@ -1,9 +1,12 @@
 package com.example.gamer.directory.services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.gamer.directory.domain.dtos.CreditDTO;
+import com.example.gamer.directory.domain.dtos.MaxCreditGameDTO;
 import com.example.gamer.directory.domain.entities.Credit;
 import com.example.gamer.directory.exceptions.CreditAlreadyAwardedException;
 import com.example.gamer.directory.repositories.CreditRepository;
@@ -39,5 +42,9 @@ public class CreditService {
 		newCredit.setAmount(credit.amount());
 		
 		creditRepository.save(newCredit);
+	}
+	
+	public List<MaxCreditGameDTO> maxCreditGames() {
+		return creditRepository.gamesWithMaxCredit();
 	}
 }

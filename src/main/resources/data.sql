@@ -18,4 +18,8 @@ insert into gamer_interests (gamer_id, game_id, interest_level)
       (2, 4, 'INVINCIBLE'), (3, 1, 'NOOB'), (3, 4, 'PRO'),
       (4, 4, 'PRO'), (4, 3, 'INVINCIBLE');
     
-    
+insert into credit (gamer_id, game_id, amount)
+values (1, 1, 10), (1, 2, 20), (1, 3, 30), 
+    (2, 1, 20), (2, 2, 15), (2, 3, 30), (2, 4, 20),
+    (3, 1, 30), (3, 3, 60), (3, 4, 30), 
+    (4, 2, 20), (4, 3, 60);    

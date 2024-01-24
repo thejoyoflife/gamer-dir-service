@@ -9,7 +9,7 @@ import com.example.gamer.directory.domain.entities.Credit;
 import com.example.gamer.directory.domain.entities.CreditId;
 
 @Repository
-public interface CreditRepository extends JpaRepository<Credit, CreditId>{
+public interface CreditRepository extends JpaRepository<Credit, CreditId>, CreditRepositoryCustom {
 	@Query(value = """
 			select case when count(*) > 0 then true else false end 
 			from credit c where c.gamer_id = :gamerId and c.game_id = :gameId
