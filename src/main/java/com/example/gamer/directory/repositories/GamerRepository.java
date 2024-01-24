@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.example.gamer.directory.domain.entities.Gamer;
 
 @Repository
-public interface GamerRepository extends JpaRepository<Gamer, Long> {
+public interface GamerRepository extends JpaRepository<Gamer, Long>, GamerRepositoryCustom {
 	
 }

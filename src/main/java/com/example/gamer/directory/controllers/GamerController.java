@@ -3,6 +3,7 @@ package com.example.gamer.directory.controllers;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.MediaType.TEXT_PLAIN_VALUE;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
@@ -11,10 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.gamer.directory.domain.dtos.GamerDTO;
 import com.example.gamer.directory.domain.dtos.GamerEnrollmentDTO;
+import com.example.gamer.directory.domain.dtos.GamerSearchRequestDTO;
 import com.example.gamer.directory.services.GamerService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,6 +28,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -63,6 +68,26 @@ public class GamerController {
 												@NonNull Long id) {
 		var gamer = gamerService.findGamerById(id);
 		return ResponseEntity.ok(gamer);
+	}
+	
+	@Operation(summary = "Pagainaed Search for Gamers by different criteria", 
+			description = "This API can be used to find Gamers by their geography, specific game name and the interest level they showed for them")
+	@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "Search was successful",
+			content = @Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = Page.class))),
+		@ApiResponse(responseCode = "400", description = "Invalid Input",
+		content = @Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = ProblemDetail.class)))	
+	})
+	@PostMapping(name = "searchGamers", value = "/search",
+			consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+	public ResponseEntity<Page<GamerDTO>> searchGamers(@Valid @RequestBody GamerSearchRequestDTO searchRequest,								
+														@Parameter(description = "Page offset/number", example = "0")
+														@RequestParam(name = "offset", defaultValue = "0") @Min(0) int pageOffset,
+														@Parameter(description = "Number of gamer records per page", example = "10")
+														@RequestParam(name = "size", defaultValue = "10") @Max(100) int pageSize
+														) {
+		var gamers = gamerService.findGamers(searchRequest, pageOffset, pageSize);
+		return ResponseEntity.ok(gamers);
 	}
 	
 }

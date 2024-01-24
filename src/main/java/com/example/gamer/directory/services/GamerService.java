@@ -1,10 +1,13 @@
 package com.example.gamer.directory.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.gamer.directory.domain.dtos.GamerDTO;
 import com.example.gamer.directory.domain.dtos.GamerEnrollmentDTO;
+import com.example.gamer.directory.domain.dtos.GamerSearchRequestDTO;
 import com.example.gamer.directory.domain.entities.Gamer;
 import com.example.gamer.directory.domain.mappers.GameMapper;
 import com.example.gamer.directory.exceptions.NotFoundException;
@@ -32,5 +35,11 @@ public class GamerService {
 						.orElseThrow(() -> 
 							new NotFoundException("Gamer not found for id: %d".formatted(id)));
 		return gameMapper.toGamerDTO(gamer);
+	}
+	
+	public Page<GamerDTO> findGamers(GamerSearchRequestDTO criteria, int pageOffset, int pageSize) {		
+		var gamers = gamerRepository.searchGamers(criteria, PageRequest.of(pageOffset, pageSize));
+		return gamers
+					.map(gamer -> gameMapper.toGamerDTO(gamer));
 	}
 }
