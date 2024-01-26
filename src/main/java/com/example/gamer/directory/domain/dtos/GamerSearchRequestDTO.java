@@ -5,8 +5,10 @@ import com.example.gamer.directory.domain.InterestLevel;
 import com.example.gamer.directory.validators.ValidGamerSearchRequest;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 
 @ValidGamerSearchRequest
+@Builder
 public record GamerSearchRequestDTO(
 			@Schema(description = "Interest level that gamers have shown their interest for various games", example = "noob")
 			InterestLevel level,
