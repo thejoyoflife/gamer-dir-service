@@ -41,7 +41,9 @@ public class GameCreditController {
 	@ApiResponses({
 		@ApiResponse(responseCode = "200", description = "Successfully awarded credit"),
 		@ApiResponse(responseCode = "400", description = "Invalid Input",
-			content = @Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = ProblemDetail.class)))		
+			content = @Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = ProblemDetail.class))),
+		@ApiResponse(responseCode = "409", description = "Conflict",
+			content = @Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = ProblemDetail.class)))
 	})
 	@PostMapping(name = "awardCredit", value = "/award-credit",
 			consumes = APPLICATION_JSON_VALUE, produces = TEXT_PLAIN_VALUE)

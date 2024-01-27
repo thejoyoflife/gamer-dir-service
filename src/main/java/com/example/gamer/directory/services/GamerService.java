@@ -26,8 +26,8 @@ public class GamerService {
 	@Transactional
 	public Long enroll(GamerEnrollmentDTO enrollment) {
 		Gamer gamer = gameMapper.toGamerFromEnrollmentDTO(enrollment);
-		gamerRepository.save(gamer);
-		return gamer.getId();
+		var saved = gamerRepository.save(gamer);
+		return saved.getId();
 	}
 	
 	public GamerDTO findGamerById(Long id) {

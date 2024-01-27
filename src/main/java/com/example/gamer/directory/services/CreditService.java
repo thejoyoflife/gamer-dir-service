@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.gamer.directory.domain.dtos.CreditDTO;
 import com.example.gamer.directory.domain.dtos.MaxCreditGameDTO;
 import com.example.gamer.directory.domain.entities.Credit;
+import com.example.gamer.directory.domain.entities.CreditId;
 import com.example.gamer.directory.exceptions.CreditAlreadyAwardedException;
 import com.example.gamer.directory.repositories.CreditRepository;
 import com.example.gamer.directory.repositories.GameRepository;
@@ -29,7 +30,8 @@ public class CreditService {
 		var game = gameRepository.getReferenceById(credit.gameId());
 		var gamer = gamerRepository.getReferenceById(credit.gamerId());
 		
-		var creditAlreadyGiven = creditRepository.isCreditAlreadyAwarded(gamer.getId(), game.getId());
+		var creditId = new CreditId(gamer.getId(), game.getId());
+		var creditAlreadyGiven = creditRepository.existsById(creditId);
 		if (creditAlreadyGiven) {
 			throw new CreditAlreadyAwardedException(
 					"Credit is already awarded to Gamer: %d for the Game: %d"
