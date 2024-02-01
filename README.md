@@ -2,6 +2,15 @@
 
 A service to manage directory of games, gamers and their credits to individual games.
 
+**Requirements:**
+1. APIs to enroll gamers and their interest
+   * Which takes the general details (name, gender, nickname, geography(europe,asia,usa))
+   * Lookup up Any 5 games(fortnite, call of duty, dota, valhalla, amongus,…).
+   * Gamers individual interests with their levels (noob, pro, invincible)
+2. Search API based on gamers levels, games and geography for auto-matching
+3. API to give credits to individual users
+4. API to get the gamer with maximum credits for each game based on their levels.
+
 ## Technologies used
 - Java 21
 - Spring Boot 3.2.2
